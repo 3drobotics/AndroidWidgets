@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colors from the 3DR Android UI style guide -->
+    <color name="green">#74D800</color>
+    <color name="blue">#5AA0E6</color>
+    <color name="black">#303030</color>
+    <color name="dark_grey">#505555</color>
+    <color name="mid_grey">#787D7D</color>
+    <color name="light_grey">#D7DCDC</color>
+    <color name="light_grey2">#F7F7F7</color>
+    <color name="red">#F1623E</color>
+    <color name="yellow">#FCD221</color>
+
+    <color name="primary_text_dark_background">#FFFFFF</color>
+    <color name="secondary_text_dark_background">#B3FFFFFF</color>
+    <color name="disabled_text_dark_background">#4DFFFFFF</color>
+
+    <color name="primary_text_light_background">#5A5F5F</color>
+    <color name="secondary_text_light_background">#B35A5F5F</color>
+    <color name="disabled_text_light_background">#4D5A5F5F</color>
+</resources>
