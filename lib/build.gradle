@@ -1,5 +1,10 @@
 apply plugin: 'com.android.library'
 
+//Decomposed version name and code (https://plus.google.com/+JakeWharton/posts/6f5TcVPRZij)
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 0
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -7,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode computeVersionCode(versionMajor, versionMinor, versionPatch)
+        versionName generateVersionName(versionMajor, versionMinor, versionPatch)
     }
     buildTypes {
         release {

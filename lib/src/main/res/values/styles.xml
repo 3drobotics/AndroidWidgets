@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Styles from the 3DR Android UI style guide -->
+    <style name="O3dr" />
+
+    <style name="O3dr.Text" >
+        <item name="android:textSize">16pt</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
+    </style>
+
+    <style name="O3dr.Text.Header">
+        <item name="android:textSize">20pt</item>
+    </style>
+
+    <style name="O3dr.Text.Title">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
+    </style>
+
+    <style name="O3dr.Text.SubHeader">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="O3dr.Text.Caption">
+        <item name="android:textSize">14pt</item>
+    </style>
+
+</resources>

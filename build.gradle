@@ -21,3 +21,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+def computeVersionCode(int versionMajor, int versionMinor, int versionPatch){
+    return versionMajor * 10000 + versionMinor * 100 + versionPatch
+}
+
+def generateVersionName(int versionMajor, int versionMinor, int versionPatch){
+    def versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
+    return versionName
+}
