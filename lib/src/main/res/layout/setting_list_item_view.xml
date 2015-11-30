@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:minHeight="48dp"
+    android:layout_margin="20dp"
+    android:padding="10dp"
+    android:background="@drawable/list_item_light_background">
+
+    <TextView
+        android:id="@+id/list_item_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="This is a test"
+        android:gravity="start|center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:drawablePadding="20dp"
+        style="@style/O3dr.Text"
+        android:textColor="@color/primary_text_light_background"
+        android:focusable="false"
+        android:clickable="false"
+        android:layout_toLeftOf="@+id/list_item_subheader"
+        android:layout_toStartOf="@+id/list_item_subheader"
+        />
+
+    <ImageView
+        android:id="@+id/forward_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:src="@drawable/forward_icon"
+        android:contentDescription="@string/content_description_forward_icon" />
+
+    <TextView
+        android:id="@+id/list_item_subheader"
+        style="@style/O3dr.Text.SubHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_toStartOf="@+id/forward_icon"
+        android:layout_toLeftOf="@+id/forward_icon"
+        android:textColor="@color/secondary_text_light_background"
+        android:clickable="false"
+        android:focusable="false"
+        tools:text="Metric"/>
+
+</RelativeLayout>
