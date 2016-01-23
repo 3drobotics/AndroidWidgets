@@ -10,8 +10,6 @@
 
     <style name="O3dr.Text.Header">
         <item name="android:textSize">20sp</item>
-        <item name="android:background">@color/dark_grey</item>
-        <item name="android:textColor">@color/primary_text_dark_background</item>
         <item name="android:gravity">center</item>
         <item name="android:minHeight">48dp</item>
     </style>
