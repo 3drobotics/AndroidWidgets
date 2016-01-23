@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SettingListItemView">
+        <attr name="header" format="string|reference" />
+        <attr name="subHeader" format="string|reference" />
+        <attr name="headerDrawable" format="reference" />
+    </declare-styleable>
+</resources>
