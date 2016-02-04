@@ -47,6 +47,24 @@ public class AspectRatioVideoView extends VideoView {
         }
     }
 
+    public int getHeightRatio() {
+        return heightRatio;
+    }
+
+    public void setHeightRatio(int heightRatio) {
+        this.heightRatio = heightRatio;
+        invalidate();
+    }
+
+    public int getWidthRatio() {
+        return widthRatio;
+    }
+
+    public void setWidthRatio(int widthRatio) {
+        this.widthRatio = widthRatio;
+        invalidate();
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = widthMeasureSpec;
