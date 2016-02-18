@@ -40,10 +40,10 @@ public class VerticalSeekBar extends SeekBar {
 
     @Override
     public void setProgress(int progress) {
-        setProgress(progress, false);
+        setProgressFromUser(progress, false);
     }
 
-    public void setProgress(int progress, boolean fromUser) {
+    public void setProgressFromUser(int progress, boolean fromUser) {
         super.setProgress(progress);
         onSizeChanged(getWidth(), getHeight(), 0, 0);
         this.fromUser = fromUser;
@@ -60,7 +60,7 @@ public class VerticalSeekBar extends SeekBar {
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
                 int i = getMax() - (int) (getMax() * event.getY() / getHeight());
-                setProgress(i, true);
+                setProgressFromUser(i, true);
                 onSizeChanged(getWidth(), getHeight(), 0, 0);
                 break;
 
