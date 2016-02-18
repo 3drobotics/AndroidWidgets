@@ -43,7 +43,7 @@ public class VerticalSeekBar extends SeekBar {
         setProgress(progress, false);
     }
 
-    private void setProgress(int progress, boolean fromUser) {
+    public void setProgress(int progress, boolean fromUser) {
         super.setProgress(progress);
         onSizeChanged(getWidth(), getHeight(), 0, 0);
         this.fromUser = fromUser;
