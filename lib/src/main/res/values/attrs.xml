@@ -17,5 +17,8 @@
             <enum name="right" value="1"/>
             <enum name="center" value="2"/>
         </attr>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+
     </declare-styleable>
 </resources>

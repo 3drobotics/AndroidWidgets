@@ -24,7 +24,9 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         RIGHT,
         CENTER
     })
-    public @interface TextGravity{}
+    public @interface TextGravity {
+    }
+
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
     public static final int CENTER = 2;
@@ -36,7 +38,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     };
 
     private String text;
-    private int textSize = 15;
+    private float textSize = 15;
     private int textColor = Color.WHITE;
     @TextGravity
     private int gravity;
@@ -62,6 +64,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     private void createTextPaint(Context context, AttributeSet attrs) {
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.FILL);
+        textPaint.setTextAlign(Paint.Align.CENTER);
 
         if (attrs != null) {
             TypedArray defAttrs = context.obtainStyledAttributes(attrs, DEFAULT_ATTRS);
@@ -71,12 +74,6 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                     String text = defAttrs.getString(0);
                     setText(text);
 
-                    int textSize = defAttrs.getInt(1, 15);
-                    setTextSize(textSize);
-
-                    int textColor = defAttrs.getInt(2, Color.WHITE);
-                    setTextColor(textColor);
-
                     TypedArray customAttr = context.getTheme().obtainStyledAttributes(
                         attrs,
                         R.styleable.TextVerticalSeekBar,
@@ -84,6 +81,12 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
                     @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, 0);
                     setGravity(textGravity);
+
+                    float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, 15);
+                    setTextSize(textSize);
+
+                    int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
+                    setTextColor(textColor);
 
                 } finally {
                     defAttrs.recycle();
@@ -102,12 +105,27 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         if (!TextUtils.isEmpty(text)) {
             Drawable thumb = getThumb();
             Rect thumbBounds = thumb.getBounds();
-            int x = (int) (thumbBounds.centerX() + (thumb.getIntrinsicWidth()/2) + getThumbOffset() +  ((textPaint.descent() + textPaint.ascent()) / 2));
+            int x = thumbBounds.centerX();
             int y = thumbBounds.centerY();
 
             canvas.save();
             canvas.rotate(90, x, y);
-            canvas.drawText(text, x, y, textPaint);
+
+            int xCoord;
+            switch (gravity) {
+                case LEFT:
+                    xCoord = thumbBounds.left;
+                    break;
+                case RIGHT:
+                    xCoord = thumbBounds.right;
+                    break;
+                case CENTER:
+                default:
+                    xCoord = x;
+                    break;
+            }
+
+            canvas.drawText(text, xCoord, (int)(y + textPaint.ascent()), textPaint);
             canvas.restore();
         }
     }
@@ -118,9 +136,9 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         invalidate();
     }
 
-    public void setTextSize(int textSize) {
+    public void setTextSize(float textSize) {
         this.textSize = textSize;
-        textPaint.setTextSize(Utils.dpToPx(getContext(), textSize));
+        textPaint.setTextSize(Utils.dpToPx(getContext(), (int)textSize));
 
         invalidate();
     }
@@ -135,21 +153,6 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     public void setGravity(@TextGravity int gravity) {
         this.gravity = gravity;
 
-        Paint.Align align;
-        switch (gravity) {
-            case CENTER:
-                align = Paint.Align.CENTER;
-                break;
-            case RIGHT:
-                align = Paint.Align.RIGHT;
-                break;
-            case LEFT:
-            default:
-                align = Paint.Align.LEFT;
-                break;
-        }
-        textPaint.setTextAlign(align);
-
         invalidate();
     }
 
@@ -157,7 +160,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         return text;
     }
 
-    public int getTextSize() {
+    public float getTextSize() {
         return textSize;
     }
 
