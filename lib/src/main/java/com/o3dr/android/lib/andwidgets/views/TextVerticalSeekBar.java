@@ -31,6 +31,16 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     public static final int RIGHT = 1;
     public static final int CENTER = 2;
 
+    @IntDef({
+        THUMB,
+        PROGRESS
+    })
+    public @interface AlignText {
+    }
+
+    public static final int THUMB = 0;
+    public static final int PROGRESS = 1;
+
     private static final int[] DEFAULT_ATTRS = new int[]{
         android.R.attr.text,
         android.R.attr.textSize,
@@ -42,8 +52,11 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     private int textColor = Color.WHITE;
     @TextGravity
     private int gravity;
+    @AlignText
+    private int alignText;
 
     private TextPaint textPaint;
+    private float textPadding;
 
     public TextVerticalSeekBar(Context context) {
         super(context);
@@ -64,7 +77,6 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     private void createTextPaint(Context context, AttributeSet attrs) {
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setTextAlign(Paint.Align.CENTER);
 
         if (attrs != null) {
             TypedArray defAttrs = context.obtainStyledAttributes(attrs, DEFAULT_ATTRS);
@@ -88,11 +100,16 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                     int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
                     setTextColor(textColor);
 
+                    @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, 0);
+                    setAlignText(alignText);
+
                 } finally {
                     defAttrs.recycle();
                 }
             }
         }
+
+        textPadding = Utils.dpToPx(context, 2);
     }
 
     @Override
@@ -105,27 +122,39 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         if (!TextUtils.isEmpty(text)) {
             Drawable thumb = getThumb();
             Rect thumbBounds = thumb.getBounds();
-            int x = thumbBounds.centerX();
-            int y = thumbBounds.centerY();
 
-            canvas.save();
-            canvas.rotate(90, x, y);
-
-            int xCoord;
-            switch (gravity) {
-                case LEFT:
-                    xCoord = thumbBounds.left;
-                    break;
-                case RIGHT:
-                    xCoord = thumbBounds.right;
-                    break;
-                case CENTER:
+            float xCoord;
+            switch (alignText) {
+                case THUMB:
                 default:
-                    xCoord = x;
+                    xCoord = thumbBounds.exactCenterX() - textPaint.ascent();
+                    break;
+                case PROGRESS:
+                    xCoord = thumbBounds.left;
                     break;
             }
 
-            canvas.drawText(text, xCoord, (int)(y + textPaint.ascent()), textPaint);
+            float yCoord;
+            switch (gravity) {
+                case LEFT:
+                    yCoord = thumbBounds.top + textPadding;
+                    textPaint.setTextAlign(Paint.Align.LEFT);
+                    break;
+                case RIGHT:
+                    yCoord = thumbBounds.bottom - textPadding;
+                    textPaint.setTextAlign(Paint.Align.RIGHT);
+                    break;
+                case CENTER:
+                default:
+                    textPaint.setTextAlign(Paint.Align.CENTER);
+                    yCoord = thumbBounds.exactCenterY();
+                    break;
+            }
+
+            canvas.save();
+            canvas.rotate(90, xCoord, yCoord);
+
+            canvas.drawText(text, xCoord, yCoord, textPaint);
             canvas.restore();
         }
     }
@@ -138,7 +167,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
-        textPaint.setTextSize(Utils.dpToPx(getContext(), (int)textSize));
+        textPaint.setTextSize(Utils.dpToPx(getContext(), (int) textSize));
 
         invalidate();
     }
@@ -153,6 +182,12 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     public void setGravity(@TextGravity int gravity) {
         this.gravity = gravity;
 
+        invalidate();
+    }
+
+
+    public void setAlignText(@AlignText int alignText) {
+        this.alignText = alignText;
         invalidate();
     }
 
@@ -171,5 +206,10 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     @TextGravity
     public int getGravity() {
         return gravity;
+    }
+
+    @AlignText
+    public int getAlignText() {
+        return alignText;
     }
 }
