@@ -94,7 +94,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                     @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, 0);
                     setGravity(textGravity);
 
-                    float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, 15);
+                    float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, Utils.dpToPx(getContext(), 15));
                     setTextSize(textSize);
 
                     int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
@@ -127,7 +127,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
             switch (alignText) {
                 case THUMB:
                 default:
-                    xCoord = thumbBounds.exactCenterX() - textPaint.ascent();
+                    xCoord = thumbBounds.exactCenterX() + (textPaint.descent() - textPaint.ascent()/2);
                     break;
                 case PROGRESS:
                     xCoord = thumbBounds.left;
@@ -167,7 +167,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
-        textPaint.setTextSize(Utils.dpToPx(getContext(), (int) textSize));
+        textPaint.setTextSize(textSize);
 
         invalidate();
     }
