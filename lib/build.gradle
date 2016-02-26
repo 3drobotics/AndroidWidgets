@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 //Decomposed version name and code (https://plus.google.com/+JakeWharton/posts/6f5TcVPRZij)
 def versionMajor = 0
-def versionMinor = 0
+def versionMinor = 1
 def versionPatch = 0
 
 android {
