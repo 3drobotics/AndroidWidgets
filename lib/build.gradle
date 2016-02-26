@@ -16,6 +16,16 @@ android {
         versionCode computeVersionCode(versionMajor, versionMinor, versionPatch)
         versionName generateVersionName("", versionMajor, versionMinor, versionPatch)
     }
+
+    android.libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            if (file != null && file.name.endsWith('.aar')) {
+                def versionName = defaultConfig.versionName
+                output.outputFile = new File(file.parent, "andwidgets.${versionName}.aar")
+            }
+        }
+    }
 }
 
 dependencies {
