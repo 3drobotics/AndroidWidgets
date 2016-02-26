@@ -91,7 +91,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                         R.styleable.TextVerticalSeekBar,
                         0, 0);
 
-                    @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, 0);
+                    @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, LEFT);
                     setGravity(textGravity);
 
                     float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, Utils.dpToPx(getContext(), 15));
@@ -100,7 +100,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                     int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
                     setTextColor(textColor);
 
-                    @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, 0);
+                    @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, THUMB);
                     setAlignText(alignText);
 
                 } finally {
