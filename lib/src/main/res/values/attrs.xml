@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SettingListItemView">
-        <attr name="header" format="string|reference" />
-        <attr name="subHeader" format="string|reference" />
-        <attr name="headerDrawable" format="reference" />
+        <attr name="header" format="string|reference"/>
+        <attr name="subHeader" format="string|reference"/>
+        <attr name="headerDrawable" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="AspectRatioVideoView">
-        <attr name="heightRatio" format="integer" />
+        <attr name="heightRatio" format="integer"/>
         <attr name="widthRatio" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextVerticalSeekBar">
+        <attr name="textGravity" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="center" value="2"/>
+        </attr>
+        <attr name="textColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="alignText" format="enum">
+            <enum name="thumb" value="0"/>
+            <enum name="progress" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>
