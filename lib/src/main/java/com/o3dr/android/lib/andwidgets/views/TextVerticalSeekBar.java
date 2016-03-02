@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -19,6 +20,8 @@ import com.o3dr.android.lib.andwidgets.views.util.Utils;
  * Created by chavi on 2/17/16.
  */
 public class TextVerticalSeekBar extends VerticalSeekBar {
+    private int thumbOffset;
+
     @IntDef({
         LEFT,
         RIGHT,
@@ -43,8 +46,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
     private static final int[] DEFAULT_ATTRS = new int[]{
         android.R.attr.text,
-        android.R.attr.textSize,
-        android.R.attr.textColor
+        android.R.attr.thumbOffset
     };
 
     private String text;
@@ -85,6 +87,8 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                 try {
                     String text = defAttrs.getString(0);
                     setText(text);
+
+                    thumbOffset = defAttrs.getDimensionPixelOffset(1, 0);
                 } finally {
                     defAttrs.recycle();
                 }
@@ -116,6 +120,21 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     protected void onDraw(Canvas c) {
         super.onDraw(c);
         drawTextOnThumb(c);
+    }
+
+    public void setEnabled(@DrawableRes int drawableId, boolean enabled) {
+        super.setEnabled(enabled);
+
+        Drawable drawable = getResources().getDrawable(drawableId, getContext().getTheme());
+
+        setThumb(drawable);
+        setProgress(getProgress());
+
+        if (!enabled) {
+            setText("");
+        } else {
+            setThumbOffset(thumbOffset);
+        }
     }
 
     private void drawTextOnThumb(Canvas canvas) {
