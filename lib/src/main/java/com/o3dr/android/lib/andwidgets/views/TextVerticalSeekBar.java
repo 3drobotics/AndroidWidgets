@@ -85,28 +85,28 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                 try {
                     String text = defAttrs.getString(0);
                     setText(text);
-
-                    TypedArray customAttr = context.getTheme().obtainStyledAttributes(
-                        attrs,
-                        R.styleable.TextVerticalSeekBar,
-                        0, 0);
-
-                    @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, LEFT);
-                    setGravity(textGravity);
-
-                    float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, Utils.dpToPx(getContext(), 15));
-                    setTextSize(textSize);
-
-                    int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
-                    setTextColor(textColor);
-
-                    @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, THUMB);
-                    setAlignText(alignText);
-
                 } finally {
                     defAttrs.recycle();
                 }
             }
+
+            TypedArray customAttr = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.TextVerticalSeekBar,
+                0, 0);
+
+            @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, LEFT);
+            setGravity(textGravity);
+
+            float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, Utils.dpToPx(getContext(), 15));
+            setTextSize(textSize);
+
+            int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
+            setTextColor(textColor);
+
+            @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, THUMB);
+            setAlignText(alignText);
+
         }
 
         textPadding = Utils.dpToPx(context, 2);
@@ -119,44 +119,46 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     }
 
     private void drawTextOnThumb(Canvas canvas) {
-        if (!TextUtils.isEmpty(text)) {
-            Drawable thumb = getThumb();
-            Rect thumbBounds = thumb.getBounds();
-
-            float xCoord;
-            switch (alignText) {
-                case THUMB:
-                default:
-                    xCoord = thumbBounds.exactCenterX() + (textPaint.descent() - textPaint.ascent()/2);
-                    break;
-                case PROGRESS:
-                    xCoord = thumbBounds.left;
-                    break;
-            }
-
-            float yCoord;
-            switch (gravity) {
-                case LEFT:
-                    yCoord = thumbBounds.top + textPadding;
-                    textPaint.setTextAlign(Paint.Align.LEFT);
-                    break;
-                case RIGHT:
-                    yCoord = thumbBounds.bottom - textPadding;
-                    textPaint.setTextAlign(Paint.Align.RIGHT);
-                    break;
-                case CENTER:
-                default:
-                    textPaint.setTextAlign(Paint.Align.CENTER);
-                    yCoord = thumbBounds.exactCenterY();
-                    break;
-            }
-
-            canvas.save();
-            canvas.rotate(90, xCoord, yCoord);
-
-            canvas.drawText(text, xCoord, yCoord, textPaint);
-            canvas.restore();
+        if (TextUtils.isEmpty(text)) {
+            text = "";
         }
+
+        Drawable thumb = getThumb();
+        Rect thumbBounds = thumb.getBounds();
+
+        float xCoord;
+        switch (alignText) {
+            case THUMB:
+            default:
+                xCoord = thumbBounds.exactCenterX() - ((textPaint.descent() + textPaint.ascent() / 2));
+                break;
+            case PROGRESS:
+                xCoord = thumbBounds.left;
+                break;
+        }
+
+        float yCoord;
+        switch (gravity) {
+            case LEFT:
+                yCoord = thumbBounds.top + textPadding;
+                textPaint.setTextAlign(Paint.Align.LEFT);
+                break;
+            case RIGHT:
+                yCoord = thumbBounds.bottom - textPadding;
+                textPaint.setTextAlign(Paint.Align.RIGHT);
+                break;
+            case CENTER:
+            default:
+                textPaint.setTextAlign(Paint.Align.CENTER);
+                yCoord = thumbBounds.exactCenterY();
+                break;
+        }
+
+        canvas.save();
+        canvas.rotate(90, xCoord, yCoord);
+
+        canvas.drawText(text, xCoord, yCoord, textPaint);
+        canvas.restore();
     }
 
     public void setText(String text) {

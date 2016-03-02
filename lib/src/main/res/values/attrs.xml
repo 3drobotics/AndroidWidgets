@@ -11,6 +11,10 @@
         <attr name="widthRatio" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="VerticalSeekBar">
+        <attr name="onlyThumb" format="boolean"/>
+    </declare-styleable>
+
     <declare-styleable name="TextVerticalSeekBar">
         <attr name="textGravity" format="enum">
             <enum name="left" value="0"/>
