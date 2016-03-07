@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -99,12 +98,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                     int textColor = defAttrs.getColor(1, Color.WHITE);
                     setTextColor(textColor);
 
-                    @DrawableRes int thumbId = defAttrs.getResourceId(2, 0);
-                    if (thumbId == 0) {
-                        thumb = null;
-                    } else {
-                        thumb = getResources().getDrawable(thumbId, getContext().getTheme());
-                    }
+                    thumb = defAttrs.getDrawable(2);
 
                     thumbOffset = defAttrs.getDimensionPixelOffset(3, 0);
 

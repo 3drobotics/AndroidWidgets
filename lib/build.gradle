@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 //Decomposed version name and code (https://plus.google.com/+JakeWharton/posts/6f5TcVPRZij)
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 0
+def versionPatch = 1
 
 android {
     compileSdkVersion android_build_sdk_version
