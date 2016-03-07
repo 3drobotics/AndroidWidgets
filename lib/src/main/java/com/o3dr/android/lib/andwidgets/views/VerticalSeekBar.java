@@ -99,9 +99,8 @@ public class VerticalSeekBar extends SeekBar {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                wasDownOnThumb = false;
-                break;
             case MotionEvent.ACTION_CANCEL:
+                wasDownOnThumb = false;
                 break;
         }
         return true;
@@ -124,7 +123,7 @@ public class VerticalSeekBar extends SeekBar {
         return false;
     }
 
-    private boolean inBetween(float loc, float bound1, float bound2) {
+    private static boolean inBetween(float loc, float bound1, float bound2) {
         if (loc >= bound1 && loc <= bound2 || loc <= bound1 && loc >= bound2) {
             return true;
         } else {

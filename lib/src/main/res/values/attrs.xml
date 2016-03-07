@@ -25,6 +25,6 @@
             <enum name="thumb" value="0"/>
             <enum name="progress" value="1"/>
         </attr>
-        <attr name="disabledThumb" format="integer"/>
+        <attr name="disabledThumb" format="reference"/>
     </declare-styleable>
 </resources>

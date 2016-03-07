@@ -66,8 +66,6 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     private TextPaint textPaint;
     private float textPadding;
 
-    @DrawableRes
-    private int disabledThumbDrawableId;
     private Drawable disabledThumbDrawable;
 
     public TextVerticalSeekBar(Context context) {
@@ -128,7 +126,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
             @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, THUMB);
             setAlignText(alignText);
 
-            @DrawableRes int disabledThumbDrawableId = customAttr.getResourceId(R.styleable.TextVerticalSeekBar_disabledThumb, 0);
+            Drawable disabledThumbDrawableId = customAttr.getDrawable(R.styleable.TextVerticalSeekBar_disabledThumb);
             setDisabledThumbDrawable(disabledThumbDrawableId);
         }
 
@@ -143,7 +141,12 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
     @Override
     public void setEnabled(boolean enabled) {
+        boolean wasEnabled = isEnabled();
         super.setEnabled(enabled);
+
+        if (wasEnabled == enabled) {
+            return;
+        }
 
         if (enabled) {
             if (thumb != null) {
@@ -235,14 +238,8 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         invalidate();
     }
 
-    public void setDisabledThumbDrawable(@DrawableRes int disabledThumbDrawableId) {
-        this.disabledThumbDrawableId = disabledThumbDrawableId;
-        if (disabledThumbDrawableId == 0) {
-            disabledThumbDrawable = null;
-        } else {
-            disabledThumbDrawable = getResources().getDrawable(disabledThumbDrawableId, getContext().getTheme());
-        }
-
+    public void setDisabledThumbDrawable(Drawable disabledThumbDrawable) {
+        this.disabledThumbDrawable = disabledThumbDrawable;
         invalidate();
     }
 
@@ -268,8 +265,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         return alignText;
     }
 
-    @DrawableRes
-    public int getDisabledThumbDrawable() {
-        return disabledThumbDrawableId;
+    public Drawable getDisabledDrawableThumb() {
+        return disabledThumbDrawable;
     }
 }
