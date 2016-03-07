@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -19,6 +20,10 @@ import com.o3dr.android.lib.andwidgets.views.util.Utils;
  * Created by chavi on 2/17/16.
  */
 public class TextVerticalSeekBar extends VerticalSeekBar {
+    private int thumbOffset;
+
+    private Drawable thumb;
+
     @IntDef({
         LEFT,
         RIGHT,
@@ -41,22 +46,27 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     public static final int THUMB = 0;
     public static final int PROGRESS = 1;
 
+    //Sorted integer order
     private static final int[] DEFAULT_ATTRS = new int[]{
-        android.R.attr.text,
-        android.R.attr.textSize,
-        android.R.attr.textColor
+        android.R.attr.textSize, //0
+        android.R.attr.textColor, //1
+        android.R.attr.thumb, //2
+        android.R.attr.thumbOffset, //3
+        android.R.attr.text //4
     };
 
     private String text;
     private float textSize = 15;
     private int textColor = Color.WHITE;
     @TextGravity
-    private int gravity;
+    private int textGravity;
     @AlignText
     private int alignText;
 
     private TextPaint textPaint;
     private float textPadding;
+
+    private Drawable disabledThumbDrawable;
 
     public TextVerticalSeekBar(Context context) {
         super(context);
@@ -83,30 +93,41 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
             if (defAttrs != null) {
                 try {
-                    String text = defAttrs.getString(0);
-                    setText(text);
-
-                    TypedArray customAttr = context.getTheme().obtainStyledAttributes(
-                        attrs,
-                        R.styleable.TextVerticalSeekBar,
-                        0, 0);
-
-                    @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, LEFT);
-                    setGravity(textGravity);
-
-                    float textSize = customAttr.getDimension(R.styleable.TextVerticalSeekBar_textSize, Utils.dpToPx(getContext(), 15));
+                    float textSize = defAttrs.getDimension(0, Utils.dpToPx(getContext(), 15));
                     setTextSize(textSize);
 
-                    int textColor = customAttr.getColor(R.styleable.TextVerticalSeekBar_textColor, Color.WHITE);
+                    int textColor = defAttrs.getColor(1, Color.WHITE);
                     setTextColor(textColor);
 
-                    @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, THUMB);
-                    setAlignText(alignText);
+                    @DrawableRes int thumbId = defAttrs.getResourceId(2, 0);
+                    if (thumbId == 0) {
+                        thumb = null;
+                    } else {
+                        thumb = getResources().getDrawable(thumbId, getContext().getTheme());
+                    }
 
+                    thumbOffset = defAttrs.getDimensionPixelOffset(3, 0);
+
+                    String text = defAttrs.getString(4);
+                    setText(text);
                 } finally {
                     defAttrs.recycle();
                 }
             }
+
+            TypedArray customAttr = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.TextVerticalSeekBar,
+                0, 0);
+
+            @TextGravity int textGravity = customAttr.getInteger(R.styleable.TextVerticalSeekBar_textGravity, LEFT);
+            setTextGravity(textGravity);
+
+            @AlignText int alignText = customAttr.getInteger(R.styleable.TextVerticalSeekBar_alignText, THUMB);
+            setAlignText(alignText);
+
+            Drawable disabledThumbDrawableId = customAttr.getDrawable(R.styleable.TextVerticalSeekBar_disabledThumb);
+            setDisabledThumbDrawable(disabledThumbDrawableId);
         }
 
         textPadding = Utils.dpToPx(context, 2);
@@ -118,45 +139,71 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         drawTextOnThumb(c);
     }
 
-    private void drawTextOnThumb(Canvas canvas) {
-        if (!TextUtils.isEmpty(text)) {
-            Drawable thumb = getThumb();
-            Rect thumbBounds = thumb.getBounds();
+    @Override
+    public void setEnabled(boolean enabled) {
+        boolean wasEnabled = isEnabled();
+        super.setEnabled(enabled);
 
-            float xCoord;
-            switch (alignText) {
-                case THUMB:
-                default:
-                    xCoord = thumbBounds.exactCenterX() + (textPaint.descent() - textPaint.ascent()/2);
-                    break;
-                case PROGRESS:
-                    xCoord = thumbBounds.left;
-                    break;
-            }
-
-            float yCoord;
-            switch (gravity) {
-                case LEFT:
-                    yCoord = thumbBounds.top + textPadding;
-                    textPaint.setTextAlign(Paint.Align.LEFT);
-                    break;
-                case RIGHT:
-                    yCoord = thumbBounds.bottom - textPadding;
-                    textPaint.setTextAlign(Paint.Align.RIGHT);
-                    break;
-                case CENTER:
-                default:
-                    textPaint.setTextAlign(Paint.Align.CENTER);
-                    yCoord = thumbBounds.exactCenterY();
-                    break;
-            }
-
-            canvas.save();
-            canvas.rotate(90, xCoord, yCoord);
-
-            canvas.drawText(text, xCoord, yCoord, textPaint);
-            canvas.restore();
+        if (wasEnabled == enabled) {
+            return;
         }
+
+        if (enabled) {
+            if (thumb != null) {
+                setThumb(thumb);
+            }
+        } else {
+            if (thumb != null) {
+                setThumb(disabledThumbDrawable);
+            }
+            setText("");
+        }
+
+        setThumbOffset(thumbOffset);
+        setProgress(getProgress());
+    }
+
+    private void drawTextOnThumb(Canvas canvas) {
+        if (TextUtils.isEmpty(text)) {
+            text = "";
+        }
+
+        Drawable thumb = getThumb();
+        Rect thumbBounds = thumb.getBounds();
+
+        float xCoord;
+        switch (alignText) {
+            case THUMB:
+            default:
+                xCoord = thumbBounds.exactCenterX() - ((textPaint.descent() + textPaint.ascent() / 2));
+                break;
+            case PROGRESS:
+                xCoord = thumbBounds.left;
+                break;
+        }
+
+        float yCoord;
+        switch (textGravity) {
+            case LEFT:
+                yCoord = thumbBounds.top + textPadding;
+                textPaint.setTextAlign(Paint.Align.LEFT);
+                break;
+            case RIGHT:
+                yCoord = thumbBounds.bottom - textPadding;
+                textPaint.setTextAlign(Paint.Align.RIGHT);
+                break;
+            case CENTER:
+            default:
+                textPaint.setTextAlign(Paint.Align.CENTER);
+                yCoord = thumbBounds.exactCenterY();
+                break;
+        }
+
+        canvas.save();
+        canvas.rotate(90, xCoord, yCoord);
+
+        canvas.drawText(text, xCoord, yCoord, textPaint);
+        canvas.restore();
     }
 
     public void setText(String text) {
@@ -179,8 +226,8 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         invalidate();
     }
 
-    public void setGravity(@TextGravity int gravity) {
-        this.gravity = gravity;
+    public void setTextGravity(@TextGravity int gravity) {
+        this.textGravity = gravity;
 
         invalidate();
     }
@@ -188,6 +235,11 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
     public void setAlignText(@AlignText int alignText) {
         this.alignText = alignText;
+        invalidate();
+    }
+
+    public void setDisabledThumbDrawable(Drawable disabledThumbDrawable) {
+        this.disabledThumbDrawable = disabledThumbDrawable;
         invalidate();
     }
 
@@ -204,12 +256,16 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     }
 
     @TextGravity
-    public int getGravity() {
-        return gravity;
+    public int getTextGravity() {
+        return textGravity;
     }
 
     @AlignText
     public int getAlignText() {
         return alignText;
+    }
+
+    public Drawable getDisabledDrawableThumb() {
+        return disabledThumbDrawable;
     }
 }
