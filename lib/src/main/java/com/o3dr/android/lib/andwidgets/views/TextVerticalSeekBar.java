@@ -144,11 +144,11 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
         if (enabled) {
             if (thumb != null) {
-                setThumb(thumb);
+                setCustomThumb(thumb);
             }
         } else {
             if (thumb != null) {
-                setThumb(disabledThumbDrawable);
+                setCustomThumb(disabledThumbDrawable);
             }
             setText("");
         }
@@ -162,14 +162,14 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
             text = "";
         }
 
-        Drawable thumb = getThumb();
+        Drawable thumb = getCustomThumb();
         Rect thumbBounds = thumb.getBounds();
 
         float xCoord;
         switch (alignText) {
             case THUMB:
             default:
-                xCoord = thumbBounds.exactCenterX() - ((textPaint.descent() + textPaint.ascent() / 2));
+                xCoord = thumbBounds.exactCenterX() + ((textPaint.descent() + textPaint.ascent() / 2));
                 break;
             case PROGRESS:
                 xCoord = thumbBounds.left;
@@ -180,7 +180,6 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         switch (textGravity) {
             case LEFT:
                 yCoord = thumbBounds.top + textPadding;
-                textPaint.setTextAlign(Paint.Align.LEFT);
                 break;
             case RIGHT:
                 yCoord = thumbBounds.bottom - textPadding;
@@ -195,7 +194,6 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
         canvas.save();
         canvas.rotate(90, xCoord, yCoord);
-
         canvas.drawText(text, xCoord, yCoord, textPaint);
         canvas.restore();
     }

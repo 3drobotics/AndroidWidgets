@@ -13,6 +13,7 @@
 
     <declare-styleable name="VerticalSeekBar">
         <attr name="onlyThumb" format="boolean"/>
+        <attr name="customThumb" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="TextVerticalSeekBar">
