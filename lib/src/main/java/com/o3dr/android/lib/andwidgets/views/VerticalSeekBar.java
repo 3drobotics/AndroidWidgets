@@ -25,16 +25,16 @@ public class VerticalSeekBar extends SeekBar {
     public VerticalSeekBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        getAttribute(context, attrs);
+        init(context, attrs);
     }
 
     public VerticalSeekBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        getAttribute(context, attrs);
+        init(context, attrs);
     }
 
-    private void getAttribute(Context context, AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
         TypedArray customAttr = context.getTheme().obtainStyledAttributes(
             attrs,
             R.styleable.VerticalSeekBar,
