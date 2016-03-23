@@ -26,7 +26,6 @@ Collection of Android custom Views
   android:layout_height="match_parent"
   android:max="100"
   android:splitTrack="false"
-  android:thumbOffset="-10dp"
   app:customThumb="@drawable/altitude_slider_icon"
   app:onlyThumb="true" />
 ```
@@ -47,7 +46,6 @@ See http://stackoverflow.com/questions/33112277/android-6-0-marshmallow-stops-sh
   android:max="100"
   android:splitTrack="false"
   android:textSize="20sp"
-  android:thumbOffset="-10dp"
   android:progress="0"
   android:text="text"
   app:customThumb="@drawable/altitude_slider_icon"
