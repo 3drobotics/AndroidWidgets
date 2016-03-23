@@ -10,6 +10,15 @@ Collection of Android custom Views
   app:widthRatio="15"/>
 ```        
 
+### SettingListItemView
+```    
+<com.o3dr.android.lib.andwidgets.views.SettingListItemView
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  app:header="Test"
+  app:subHeader="Sub Test"/>
+```
+
 ### VerticalSeekBar
 ```
 <com.o3dr.android.lib.andwidgets.views.VerticalSeekBar
