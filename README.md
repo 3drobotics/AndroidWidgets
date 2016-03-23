@@ -20,6 +20,8 @@ Collection of Android custom Views
 ```
 
 ### VerticalSeekBar
+![alt text](https://github.com/3drobotics/AndroidWidgets/blob/develop/images/home_screen.png)
+
 ```
 <com.o3dr.android.lib.andwidgets.views.VerticalSeekBar
   android:layout_width="100dp"
