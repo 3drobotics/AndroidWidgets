@@ -28,13 +28,13 @@ class TableOfContents : AppCompatActivity() {
         verticalSeekSwitch = findViewById(R.id.vertical_seek_switch) as Switch
         textVerticalSeekSwitch = findViewById(R.id.text_vertical_seek_switch) as Switch
 
-        verticalSeekSwitch?.setOnCheckedChangeListener({ compoundButton: CompoundButton, b: Boolean ->
+        verticalSeekSwitch?.setOnCheckedChangeListener{ compoundButton: CompoundButton, b: Boolean ->
             verticalSeek?.isOnlyThumb = b;
-        })
+        }
 
-        textVerticalSeekSwitch?.setOnCheckedChangeListener({ compoundButton: CompoundButton, b: Boolean ->
+        textVerticalSeekSwitch?.setOnCheckedChangeListener{ compoundButton: CompoundButton, b: Boolean ->
             textVerticalSeek?.isEnabled = b;
-        })
+        }
 
         textVerticalSeek?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
