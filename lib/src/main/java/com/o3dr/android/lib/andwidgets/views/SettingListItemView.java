@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.o3dr.android.lib.andwidgets.R;
 
 /**
- * Created by Fredia Huya-Kouadio on 11/16/15.
+ * SettingListItemView
  */
 public class SettingListItemView extends FrameLayout {
 

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="altitude_fill">#99269FD4</color>
+    <color name="altitude_no_fill">#99FFFFFF</color>
+</resources>

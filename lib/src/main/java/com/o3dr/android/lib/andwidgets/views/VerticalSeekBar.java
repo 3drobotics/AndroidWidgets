@@ -11,10 +11,14 @@ import android.widget.SeekBar;
 
 import com.o3dr.android.lib.andwidgets.R;
 
+/**
+ * Custom VerticalSeekBar
+ */
 public class VerticalSeekBar extends SeekBar {
     private boolean fromUser = false;
     private boolean onlySlideOnThumb = false;
     private Drawable customThumb = null;
+    protected Drawable initialCustomThumb = null;
 
     private boolean wasDownOnThumb = false;
 
@@ -41,10 +45,11 @@ public class VerticalSeekBar extends SeekBar {
             0, 0);
 
         boolean onlyThumb = customAttr.getBoolean(R.styleable.VerticalSeekBar_onlyThumb, false);
-        Drawable customThumb = customAttr.getDrawable(R.styleable.VerticalSeekBar_customThumb);
+        initialCustomThumb = customAttr.getDrawable(R.styleable.VerticalSeekBar_customThumb);
 
-        setOnlySlideOnThumb(onlyThumb);
-        setCustomThumb(customThumb);
+        setOnlyThumb(onlyThumb);
+        setCustomThumb(initialCustomThumb);
+        setThumb(getResources().getDrawable(android.R.color.transparent));
     }
 
     @Override
@@ -61,9 +66,9 @@ public class VerticalSeekBar extends SeekBar {
     protected void onDraw(Canvas c) {
         c.rotate(-90);
         c.translate(-getHeight(), 0);
-        drawThumb(c);
 
         super.onDraw(c);
+        drawThumb(c);
     }
 
     private void drawThumb(Canvas canvas) {
@@ -100,11 +105,22 @@ public class VerticalSeekBar extends SeekBar {
         return max > 0 ? getProgress() / (float) max : 0;
     }
 
+    /**
+     * Sets the progress for the SeekBar programmatically.
+     *
+     * @param progress
+     */
     @Override
     public void setProgress(int progress) {
         setProgressFromUser(progress, false);
     }
 
+    /**
+     * Sets whether the progress was initiated from the user or programmatically.
+     *
+     * @param progress
+     * @param fromUser
+     */
     public void setProgressFromUser(int progress, boolean fromUser) {
         this.fromUser = fromUser;
         super.setProgress(progress);
@@ -154,7 +170,7 @@ public class VerticalSeekBar extends SeekBar {
         Drawable thumb = getCustomThumb();
         Rect thumbBounds = thumb.getBounds();
 
-        if (inBetween(event.getX(), thumbBounds.top + getX(), thumbBounds.bottom + getX())
+        if (inBetween(event.getX(), thumbBounds.top, thumbBounds.bottom)
             && inBetween(event.getY(), getHeight() - thumbBounds.left, getHeight() - thumbBounds.right)) {
             return true;
         }
@@ -170,15 +186,24 @@ public class VerticalSeekBar extends SeekBar {
         }
     }
 
+    /**
+     * Use this instead of the isFromUser returned in the {@link android.widget.SeekBar.OnSeekBarChangeListener#onProgressChanged(SeekBar, int, boolean)}
+     * @return whether the touche was initiated from the user
+     */
     public boolean isFromUser() {
         return fromUser;
     }
 
-    public boolean isOnlySlideOnThumb() {
+    public boolean isOnlyThumb() {
         return onlySlideOnThumb;
     }
 
-    public void setOnlySlideOnThumb(boolean onlySlideOnThumb) {
+    /**
+     * Whether the slider should only move when the touch was initiated on the thumb.
+     *
+     * @param onlySlideOnThumb
+     */
+    public void setOnlyThumb(boolean onlySlideOnThumb) {
         this.onlySlideOnThumb = onlySlideOnThumb;
         invalidate();
     }
@@ -187,6 +212,12 @@ public class VerticalSeekBar extends SeekBar {
         return customThumb;
     }
 
+    /**
+     * Custom thumb to ensure the thumb is drawn on the vertical seek bar. Compatible with Android M.
+     * see http://stackoverflow.com/questions/33112277/android-6-0-marshmallow-stops-showing-vertical-seekbar-thumb/36094973
+     *
+     * @param customThumb
+     */
     public void setCustomThumb(Drawable customThumb) {
         this.customThumb = customThumb;
         invalidate();
