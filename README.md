@@ -1,5 +1,5 @@
 # AndWidgets
-Collection of Android useful custom Views
+Collection of Android custom Views
 
 ### AspectRatioVideoView 
 ```
