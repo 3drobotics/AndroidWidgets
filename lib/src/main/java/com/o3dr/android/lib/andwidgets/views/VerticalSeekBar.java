@@ -14,6 +14,7 @@ import com.o3dr.android.lib.andwidgets.R;
 public class VerticalSeekBar extends SeekBar {
     private boolean fromUser = false;
     private boolean onlySlideOnThumb = false;
+    private Drawable customThumb = null;
 
     private boolean wasDownOnThumb = false;
 
@@ -24,23 +25,26 @@ public class VerticalSeekBar extends SeekBar {
     public VerticalSeekBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        getAttribute(context, attrs);
+        init(context, attrs);
     }
 
     public VerticalSeekBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        getAttribute(context, attrs);
+        init(context, attrs);
     }
 
-    private void getAttribute(Context context, AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
         TypedArray customAttr = context.getTheme().obtainStyledAttributes(
             attrs,
             R.styleable.VerticalSeekBar,
             0, 0);
 
         boolean onlyThumb = customAttr.getBoolean(R.styleable.VerticalSeekBar_onlyThumb, false);
+        Drawable customThumb = customAttr.getDrawable(R.styleable.VerticalSeekBar_customThumb);
+
         setOnlySlideOnThumb(onlyThumb);
+        setCustomThumb(customThumb);
     }
 
     @Override
@@ -57,8 +61,43 @@ public class VerticalSeekBar extends SeekBar {
     protected void onDraw(Canvas c) {
         c.rotate(-90);
         c.translate(-getHeight(), 0);
+        drawThumb(c);
 
         super.onDraw(c);
+    }
+
+    private void drawThumb(Canvas canvas) {
+        Drawable customThumb = getCustomThumb();
+
+        if (customThumb != null) {
+
+            int available = getHeight() - getPaddingTop() - getPaddingBottom();
+            final int thumbHeight = customThumb.getIntrinsicHeight();
+            available -= thumbHeight;
+            // The extra space for the thumb to move on the track
+            available += getThumbOffset() * 2;
+
+            int left = (int) (getScale() * available + 0.5f);
+
+            final int top, bottom;
+            top = 0;
+            bottom = customThumb.getIntrinsicWidth();
+
+            final int right = left + customThumb.getIntrinsicHeight();
+
+            customThumb.setBounds(left, top, right, bottom);
+
+            canvas.save();
+            canvas.translate(getPaddingBottom() - getThumbOffset(), getPaddingTop());
+            customThumb.draw(canvas);
+            canvas.restore();
+
+        }
+    }
+
+    private float getScale() {
+        final int max = getMax();
+        return max > 0 ? getProgress() / (float) max : 0;
     }
 
     @Override
@@ -112,7 +151,7 @@ public class VerticalSeekBar extends SeekBar {
     }
 
     private boolean isOnThumb(MotionEvent event) {
-        Drawable thumb = getThumb();
+        Drawable thumb = getCustomThumb();
         Rect thumbBounds = thumb.getBounds();
 
         if (inBetween(event.getX(), thumbBounds.top + getX(), thumbBounds.bottom + getX())
@@ -141,6 +180,15 @@ public class VerticalSeekBar extends SeekBar {
 
     public void setOnlySlideOnThumb(boolean onlySlideOnThumb) {
         this.onlySlideOnThumb = onlySlideOnThumb;
+        invalidate();
+    }
+
+    public Drawable getCustomThumb() {
+        return customThumb;
+    }
+
+    public void setCustomThumb(Drawable customThumb) {
+        this.customThumb = customThumb;
         invalidate();
     }
 }
