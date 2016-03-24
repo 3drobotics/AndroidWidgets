@@ -16,12 +16,10 @@ import com.o3dr.android.lib.andwidgets.R;
 import com.o3dr.android.lib.andwidgets.views.util.Utils;
 
 /**
- * Created by chavi on 2/17/16.
+ * VerticalSeek bar with text written on the thumb or end of seek bar.
  */
 public class TextVerticalSeekBar extends VerticalSeekBar {
     private int thumbOffset;
-
-    private Drawable thumb;
 
     @IntDef({
         LEFT,
@@ -49,9 +47,8 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     private static final int[] DEFAULT_ATTRS = new int[]{
         android.R.attr.textSize, //0
         android.R.attr.textColor, //1
-        android.R.attr.thumb, //2
-        android.R.attr.thumbOffset, //3
-        android.R.attr.text //4
+        android.R.attr.thumbOffset, //2
+        android.R.attr.text //3
     };
 
     private String text;
@@ -98,11 +95,9 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
                     int textColor = defAttrs.getColor(1, Color.WHITE);
                     setTextColor(textColor);
 
-                    thumb = defAttrs.getDrawable(2);
+                    thumbOffset = defAttrs.getDimensionPixelOffset(2, 0);
 
-                    thumbOffset = defAttrs.getDimensionPixelOffset(3, 0);
-
-                    String text = defAttrs.getString(4);
+                    String text = defAttrs.getString(3);
                     setText(text);
                 } finally {
                     defAttrs.recycle();
@@ -133,6 +128,13 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         drawTextOnThumb(c);
     }
 
+    /**
+     * Sets whether the seekbar is enabled or disabled. This will also set the seekbar's thumb
+     * to disabledThumbDrawable if the the seekbar is disabled. It will also remove any text that
+     * was previously on the thumb if disabled and re-add the last text if enabled
+     *
+     * @param enabled
+     */
     @Override
     public void setEnabled(boolean enabled) {
         boolean wasEnabled = isEnabled();
@@ -143,14 +145,13 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
         }
 
         if (enabled) {
-            if (thumb != null) {
-                setCustomThumb(thumb);
+            if (initialCustomThumb != null) {
+                setCustomThumb(initialCustomThumb);
             }
         } else {
-            if (thumb != null) {
+            if (disabledThumbDrawable != null) {
                 setCustomThumb(disabledThumbDrawable);
             }
-            setText("");
         }
 
         setThumbOffset(thumbOffset);
@@ -158,8 +159,11 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
     }
 
     private void drawTextOnThumb(Canvas canvas) {
-        if (TextUtils.isEmpty(text)) {
-            text = "";
+        String localText = text;
+        if (!isEnabled()) {
+            localText = "";
+        } else if (TextUtils.isEmpty(localText)) {
+            localText = "";
         }
 
         Drawable thumb = getCustomThumb();
@@ -194,7 +198,7 @@ public class TextVerticalSeekBar extends VerticalSeekBar {
 
         canvas.save();
         canvas.rotate(90, xCoord, yCoord);
-        canvas.drawText(text, xCoord, yCoord, textPaint);
+        canvas.drawText(localText, xCoord, yCoord, textPaint);
         canvas.restore();
     }
 

@@ -8,7 +8,9 @@ import android.widget.VideoView;
 import com.o3dr.android.lib.andwidgets.R;
 
 /**
- * Created by chavi on 1/27/16.
+ * Generates a VideoView that maintains the aspect ratio of the video.
+ *
+ * Use heightRatio and widthRatio to calculate the aspect ratio of the video
  */
 public class AspectRatioVideoView extends VideoView {
     private int widthRatio;
