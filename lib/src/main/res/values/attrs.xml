@@ -28,4 +28,17 @@
         </attr>
         <attr name="disabledThumb" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomSwipeViewPager">
+        <attr name="swipeEnabled" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="AutofitRecyclerView">
+        <attr name="columnWidth" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="IntervalSeekBar">
+        <attr name="dotColor" format="color"/>
+        <attr name="dotRadius" format="dimension"/>
+    </declare-styleable>
 </resources>

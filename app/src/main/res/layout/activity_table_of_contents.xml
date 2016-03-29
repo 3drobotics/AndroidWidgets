@@ -12,6 +12,14 @@
         app:header="Test"
         app:subHeader="Sub Test"/>
 
+    <com.o3dr.android.lib.andwidgets.views.IntervalSeekBar
+        android:id="@+id/interval_seek_bar"
+        android:layout_width="300dp"
+        android:max="100"
+        android:layout_height="wrap_content"
+        app:dotColor="@color/blue"
+        app:dotRadius="5dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,8 +77,8 @@
                 android:layout_marginLeft="10dp"
                 android:max="100"
                 android:progress="0"
-                android:text="0"
                 android:splitTrack="false"
+                android:text="0"
                 android:textSize="20sp"
                 app:alignText="thumb"
                 app:customThumb="@drawable/altitude_slider_icon"
@@ -85,10 +93,10 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/vertical_seek_bar"
             android:max="100"
-            android:text="0"
             android:progress="0"
             android:progressDrawable="@drawable/altitude_progress"
             android:splitTrack="false"
+            android:text="0"
             android:textColor="#FF241299"
             android:textSize="20sp"
             app:alignText="progress"

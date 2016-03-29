@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.CompoundButton
 import android.widget.SeekBar
 import android.widget.Switch
+import com.o3dr.android.lib.andwidgets.views.IntervalSeekBar
 import com.o3dr.android.lib.andwidgets.views.TextVerticalSeekBar
 import com.o3dr.android.lib.andwidgets.views.VerticalSeekBar
 
@@ -18,6 +19,7 @@ class TableOfContents : AppCompatActivity() {
     var textOnProgressSeek : TextVerticalSeekBar? = null
     var verticalSeekSwitch : Switch? = null
     var textVerticalSeekSwitch : Switch? = null
+    var intervalSeekBar : IntervalSeekBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -61,5 +63,9 @@ class TableOfContents : AppCompatActivity() {
             }
 
         })
+
+        val dotLocations: IntArray = intArrayOf(0, 50, 75, 100)
+        intervalSeekBar = findViewById(R.id.interval_seek_bar) as IntervalSeekBar
+        intervalSeekBar?.dotLocations = dotLocations
     }
 }
