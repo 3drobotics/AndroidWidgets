@@ -20,6 +20,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${support_lib_version}"
+    compile "com.android.support:design:${support_lib_version}"
 
     compile project(':lib')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
