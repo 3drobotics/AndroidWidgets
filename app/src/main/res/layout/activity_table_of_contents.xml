@@ -1,98 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:orientation="vertical">
 
-    <com.o3dr.android.lib.andwidgets.views.SettingListItemView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/setting_list_item_view_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:header="Test"
-        app:subHeader="Sub Test"/>
+        android:textAllCaps="false"
+        style="@style/ButtonTheme"
+        android:text="settingListItemView"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
+    <Button
+        android:id="@+id/vertical_seek_bars_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        style="@style/ButtonTheme"
+        android:text="verticalSeekBars"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+    <Button
+        android:id="@+id/interval_seek_bar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        style="@style/ButtonTheme"
+        android:text="intervalSeekBar"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="On thumb?"/>
+    <Button
+        android:id="@+id/auto_fit_recycler_view_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        style="@style/ButtonTheme"
+        android:text="autoFitRecyclerView"/>
 
-            <Switch
-                android:id="@+id/vertical_seek_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <com.o3dr.android.lib.andwidgets.views.VerticalSeekBar
-                android:id="@+id/vertical_seek_bar"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/vertical_seek_switch"
-                android:max="100"
-                android:splitTrack="false"
-                app:customThumb="@drawable/altitude_slider_icon"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enable?"/>
-
-            <Switch
-                android:id="@+id/text_vertical_seek_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/vertical_seek_switch"
-                android:checked="true"/>
-
-            <com.o3dr.android.lib.andwidgets.views.TextVerticalSeekBar
-                android:id="@+id/text_vertical_seek_bar"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:max="100"
-                android:progress="0"
-                android:text="0"
-                android:splitTrack="false"
-                android:textSize="20sp"
-                app:alignText="thumb"
-                app:customThumb="@drawable/altitude_slider_icon"
-                app:disabledThumb="@drawable/disabled_thumb"
-                app:textGravity="center"/>
-        </LinearLayout>
-
-        <com.o3dr.android.lib.andwidgets.views.TextVerticalSeekBar
-            android:id="@+id/text_on_thumb_seek"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/vertical_seek_bar"
-            android:max="100"
-            android:text="0"
-            android:progress="0"
-            android:progressDrawable="@drawable/altitude_progress"
-            android:splitTrack="false"
-            android:textColor="#FF241299"
-            android:textSize="20sp"
-            app:alignText="progress"
-            app:customThumb="@drawable/altitude_slider_icon_transparent"
-            app:textGravity="center"/>
-    </LinearLayout>
+    <Button
+        android:id="@+id/custom_view_pager_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        style="@style/ButtonTheme"
+        android:text="customSwipeViewPager"/>
 </LinearLayout>

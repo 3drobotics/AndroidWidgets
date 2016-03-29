@@ -1,8 +1,12 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.o3dr.android.andwidgets">
+<manifest
+    package="com.o3dr.android.andwidgets"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher" android:supportsRtl="true"
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity android:name=".TableOfContents">
@@ -12,6 +16,22 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".SettingListItemViewActivity"
+            android:label="SettingsListItemView"/>
+        <activity
+            android:name=".VerticalSeekBarsActivity"
+            android:label="VerticalSeekBars"/>
+        <activity
+            android:name=".IntervalSeekBarActivity"
+            android:label="IntervalSeekBar"/>
+
+        <activity
+            android:name=".AutofitRecyclerViewActivity"
+            android:label="AutoFItRecyclerView"/>
+
+        <activity android:name=".CustomSwipeViewPagerActivity"
+                  android:label="CustomSwipeViewPager"/>
     </application>
 
 </manifest>
