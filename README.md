@@ -11,6 +11,8 @@ Collection of Android custom Views
 ```        
 
 ### SettingListItemView
+![alt text](https://github.com/3drobotics/AndroidWidgets/blob/develop/images/setting_list_item_view.png)
+
 ```    
 <com.o3dr.android.lib.andwidgets.views.SettingListItemView
   android:layout_width="match_parent"
@@ -20,7 +22,7 @@ Collection of Android custom Views
 ```
 
 ### VerticalSeekBar
-![alt text](https://github.com/3drobotics/AndroidWidgets/blob/develop/images/home_screen.png)
+![alt text](https://github.com/3drobotics/AndroidWidgets/blob/develop/images/vertical_seek_bars.png)
 
 ```
 <com.o3dr.android.lib.andwidgets.views.VerticalSeekBar
@@ -61,3 +63,50 @@ See http://stackoverflow.com/questions/33112277/android-6-0-marshmallow-stops-sh
 * `app:customThumb` See above in `VerticalSeekBar`
 * `app:disabledThumb` The thumb to show when the seekbar is disabled.
 * `app:alignText` Draws the text on either the thumb or end of seekbar. Possible values are `thumb` or `progress`. Default is `thumb`
+* 
+
+### IntervalSeekBar
+![alt text](https://github.com/3drobotics/AndroidWidgets/blob/develop/images/interval_seek_bar.png)
+
+```
+<com.o3dr.android.lib.andwidgets.views.IntervalSeekBar
+  android:id="@+id/interval_seek_bar"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:max="100"
+  app:dotColor="@color/blue"
+  app:dotRadius="5dp"/>
+```
+
+* `app:dotColor` sets the color for the interval circles
+* `app:dotRadius` the radisu for the interval circles
+* In code, you can set the locations of the dots. The values indicate the progress where the dots should be drawn. 
+```
+  int[] dotLocations = new int[]{0, 50, 75, 100};
+  intervalSeekBar.setDotLocations(dotLocations);
+```
+
+### AutofitRecyclerView
+![alt text](https://github.com/3drobotics/AndroidWidgets/blob/develop/images/auto_fit_recycler.png)
+
+```
+<com.o3dr.android.lib.andwidgets.views.AutofitRecyclerView
+  android:id="@+id/auto_fit_recycler_view"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  app:columnWidth="100dp"/>
+```
+
+* `app:columnWidth` specifies the width of each recycler view item. The code will calcuate how many columns there should be
+
+### CustomSwipeViewPager
+
+```
+<com.o3dr.android.lib.andwidgets.views.CustomSwipeViewPager
+  android:id="@+id/custom_swipe_view_pager"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  app:swipeEnabled="false"/>
+```
+
+* `app:swipeEnabled` set whether the viewPager can be swiped or not.
